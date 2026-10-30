@@ -839,3 +839,5 @@ body.p-grad .hero-vignette,body.p-grad .ch-bg::after,body.p-grad .pv-media::afte
 body.p-sticky .pv-media{position:relative!important}
 body.p-sticky .pv-over{margin-top:0!important}
 body.p-snap{scroll-snap-type:none!important}
+
+@media (max-width:760px){#hero .kicker{font-size:.58rem;letter-spacing:.1em;white-space:nowrap}html[dir=rtl] #hero .kicker{font-size:.7rem;letter-spacing:0}}
