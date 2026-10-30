@@ -802,3 +802,9 @@ html.shot .only-hide{display:none!important}
   .ch-title{font-size:clamp(1.5rem,7.2vw,2.2rem)}
 }
 @media (max-width:760px){.pv-backbtn{top:calc(var(--nav-h) + 4px);bottom:auto;inset-inline-start:12px}}
+
+/* ---------- v10: circular actor avatars ---------- */
+.char .ch-actor{display:flex;align-items:center;gap:.9rem}
+.char .ch-actor img{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:0 0 auto;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 8px 24px rgba(0,0,0,.5)}
+.char .ch-actor div{flex:1;min-width:0}
+@media (max-width:760px){.char .ch-actor{display:flex;grid-template-columns:none;gap:.8rem}.char .ch-actor img{width:52px;height:52px}}
