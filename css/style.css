@@ -305,12 +305,12 @@ html[dir=rtl] #progress{transform-origin:right}
 #hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding-top:var(--nav-h);overflow:hidden;isolation:isolate;position:relative}
 .hero-bg{position:absolute;inset:0;z-index:-1;overflow:hidden;background:#000}
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero-wash{position:absolute;inset:-8%;background:url(../assets/img/bg.webp) center/cover no-repeat;opacity:.5;will-change:transform;backface-visibility:hidden}
+.hero-wash{position:absolute;inset:-8%;background:url(../assets/img/bg-m.webp) center/cover no-repeat;opacity:.5;will-change:transform;backface-visibility:hidden;transform:translateZ(0)}
 .hero-vignette{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.35) 45%,rgba(0,0,0,.1) 75%),linear-gradient(180deg,rgba(0,0,0,.5),transparent 25%,transparent 70%,rgba(5,5,5,.9))}
 html[dir=rtl] .hero-vignette{background:linear-gradient(270deg,rgba(0,0,0,.72),rgba(0,0,0,.35) 45%,rgba(0,0,0,.1) 75%),linear-gradient(180deg,rgba(0,0,0,.5),transparent 25%,transparent 70%,rgba(5,5,5,.9))}
-.hero-grain{position:absolute;inset:-30%;opacity:.05;will-change:transform;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");animation:grain 1.4s steps(5) infinite}
+.hero-grain{display:none}
 @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-4%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
-@media (max-width:700px){.hero-wash{background-image:url(../assets/img/bg-m.webp)}.hero-grain{display:none}}
+@media (max-width:700px){.hero-grain{display:none}}
 .hero-inner{position:absolute;z-index:1;inset-inline-start:var(--gutter);top:50%;transform:translateY(-52%);display:flex;flex-direction:column;align-items:flex-start;text-align:start;gap:1rem;max-width:min(62vw,900px)}
 .hero-logo{width:min(52vw,760px);margin:.2rem 0}
 .hero-logo img{width:100%;filter:drop-shadow(0 20px 60px rgba(0,0,0,.6))}
@@ -808,3 +808,34 @@ html.shot .only-hide{display:none!important}
 .char .ch-actor img{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:0 0 auto;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 8px 24px rgba(0,0,0,.5)}
 .char .ch-actor div{flex:1;min-width:0}
 @media (max-width:760px){.char .ch-actor{display:flex;grid-template-columns:none;gap:.8rem}.char .ch-actor img{width:52px;height:52px}}
+
+/* ---------- v11: performance over video ---------- */
+/* glass panels that sit on top of a playing video: no backdrop blur (recomputed every frame) */
+.chapter .glass,.pv-stage .glass{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(8,8,10,.66)}
+/* cursor: blend mode costs a full re-composite per frame over video; switch to a plain ring there */
+body.over-video #cursor{mix-blend-mode:normal}
+body.over-video .c-ring{border-color:rgba(255,255,255,.95);box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+body.over-video .c-dot{box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+body.over-video #cursor.hover .c-ring{background:rgba(255,255,255,.96)}
+/* keep videos on their own compositor layer, never re-rasterised by overlays */
+.hero-video,.ch-bg video,.pv-media video,.reel-card video{will-change:transform;transform:translateZ(0)}
+/* the floating poster's heavy shadow is rasterised once instead of per animation frame */
+.ch-poster-in,.pv-poster-in{will-change:transform}
+
+/* ---------- perf switchboard (?perf=1) ---------- */
+#perf{position:fixed;left:12px;bottom:12px;z-index:300;background:rgba(0,0,0,.85);color:#fff;font:12px/1.5 var(--f-mono);padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.2);display:grid;gap:4px;min-width:200px}
+#perf b{font-size:18px;display:block;margin-bottom:4px}
+#perf label{display:flex;gap:8px;align-items:center;cursor:pointer}
+body.p-cursor #cursor{display:none!important}
+body.p-cursor,body.p-cursor a,body.p-cursor button{cursor:auto!important}
+body.p-video video{visibility:hidden!important}
+body.p-glass .glass{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(8,8,10,.8)!important}
+body.p-poster .ch-poster-in,body.p-poster .pv-poster-in{animation:none!important;box-shadow:none!important;transform:none!important}
+body.p-poster .ch-poster-in::after,body.p-poster .pv-poster-in::after{display:none!important}
+body.p-kb .pv-media>img.kb,body.p-kb .ch-bg img{animation:none!important;transform:none!important;transition:none!important}
+body.p-shadow .pv-title,body.p-shadow .ch-title,body.p-shadow .pv-tag,body.p-shadow .ch-tag,body.p-shadow .hero-title,body.p-shadow .hero-sub{text-shadow:none!important}
+body.p-hero .hero-grain,body.p-hero .hero-wash{display:none!important}
+body.p-grad .hero-vignette,body.p-grad .ch-bg::after,body.p-grad .pv-media::after{display:none!important}
+body.p-sticky .pv-media{position:relative!important}
+body.p-sticky .pv-over{margin-top:0!important}
+body.p-snap{scroll-snap-type:none!important}

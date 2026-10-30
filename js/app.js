@@ -66,6 +66,7 @@
     document.addEventListener("mouseenter", () => cur.classList.remove("hidden"));
     document.addEventListener("mouseover", e => {
       const el = e.target.closest("[data-cursor], a, button, .reel-card, .frame, .chip, .book, .char, .member, .ch-stills figure");
+      body.classList.toggle("over-video", !!e.target.closest("#hero, .chapter, .pv-stage, #reelstrip"));
       if (el) { cur.classList.add("hover"); cLabel.textContent = el.getAttribute("data-cursor") || (el.closest(".reel-card") ? t(S.ui.open_project).toUpperCase() : ""); }
       else cur.classList.remove("hover");
     });
@@ -410,6 +411,14 @@
   /* ---------- boot ---------- */
   if (shot) { html.classList.add("shot"); const only = params.get("only"); if (only) { $$("main > *, .marquee").forEach(el => { if (el.id !== only && !el.querySelector("#" + only)) el.classList.add("only-hide"); }); $$("#chapters > .chapter").forEach(ch => { if (only.startsWith("ch-") && ch.id !== only) ch.classList.add("only-hide"); }); } }
   if (shot) setTimeout(() => { const w = innerWidth; const bad = $$("body *").filter(el => { const r = el.getBoundingClientRect(); const cs = getComputedStyle(el); return r.width > 0 && r.right > w + 1 && cs.position !== "fixed" && cs.display !== "none"; }).slice(0, 30).map(el => el.tagName + "." + [...el.classList].slice(0, 2).join(".") + (el.id ? "#" + el.id : "") + ":" + Math.round(el.getBoundingClientRect().left) + "-" + Math.round(el.getBoundingClientRect().right)); body.setAttribute("data-overflow", "SW=" + document.documentElement.scrollWidth + " W=" + w + " | " + bad.join(" | ")); }, 1500);
+  if (params.has("perf")) {
+    const items = [["cursor", "custom cursor"], ["video", "videos"], ["glass", "glass blur"], ["poster", "poster float+shadow"], ["kb", "Ken Burns / zoom"], ["shadow", "text shadows"], ["hero", "hero grain+wash"], ["grad", "dark gradients"], ["sticky", "sticky stage"]];
+    const box = document.createElement("div"); box.id = "perf"; box.innerHTML = `<b id="fps">-- fps</b>` + items.map(([k, l]) => `<label><input type="checkbox" data-k="${k}"> no ${l}</label>`).join("");
+    body.appendChild(box);
+    box.addEventListener("change", e => { const k = e.target.dataset.k; if (k) body.classList.toggle("p-" + k, e.target.checked); });
+    let frames = 0, t0 = performance.now(); const fpsEl = box.querySelector("#fps");
+    (function tick(now) { frames++; if (now - t0 >= 1000) { fpsEl.textContent = frames + " fps"; fpsEl.style.color = frames >= 55 ? "#7df0a6" : frames >= 40 ? "#ffd36b" : "#ff6b6b"; frames = 0; t0 = now; } requestAnimationFrame(tick); })(performance.now());
+  }
   if (isHome) initHome();
   applyLang(lang);
   onScroll();
