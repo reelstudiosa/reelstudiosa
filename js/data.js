@@ -158,7 +158,7 @@ window.SITE = {
         { name: { en: "Sultan", ar: "سلطان" }, age: { en: "Late twenties", ar: "نهاية العشرينات" }, job: { en: "Cultural interviewer", ar: "روائي محاور" },
           traits: { en: "Calm, observant, composed.", ar: "هادئ، ملاحظ، متزن." },
           bio: { en: "A sharp, courteous cultural interviewer who knows how to draw his guest out with questions, without ever confronting him. His calm and curiosity expose a side of Al-Waleed's arrogance in front of the audience.", ar: "محاور ثقافي ذكي ولبق، يعرف كيف يستدرج ضيفه بالأسئلة دون مواجهة مباشرة. هدوؤه وفضوله يكشفان جانبًا من غرور الوليد أمام الجمهور." },
-          actor: { en: "Khalaf Zoun", ar: "خلف زون" }, actorBio: { en: "Influencer, novelist, actor", ar: "مؤثر، روائي، ممثل" }, img: "assets/img/feature/actor-khalaf.png" },
+          actor: { en: "Khalaf Zone", ar: "خلف زون" }, actorBio: { en: "Influencer, novelist, actor", ar: "مؤثر، روائي، ممثل" }, img: "assets/img/feature/actor-khalaf.png" },
         { name: { en: "Abu Mohammed", ar: "ابو محمد" }, age: { en: "Forties", ar: "الأربعينات" }, job: { en: "Al-Waleed's business manager", ar: "مدير أعمال الوليد" },
           traits: { en: "Practical, sharp, direct; cares about image and results more than details.", ar: "عملي، حاد، مباشر، يركز على الصورة والنتائج أكثر من التفاصيل." },
           bio: { en: "Runs Al-Waleed's career and guards his success and public image. He treats everything with market logic — where reputation is the real capital.", ar: "يدير مسيرة الوليد المهنية، ويحرص على استمرارية نجاحه وصورته أمام الجمهور. يتعامل مع الأمور بمنطق السوق، حيث السمعة رأس المال الحقيقي." },
