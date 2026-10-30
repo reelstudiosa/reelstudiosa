@@ -784,3 +784,21 @@ html.shot .only-hide{display:none!important}
   .char .ch-kv{grid-template-columns:auto 1fr;font-size:.88rem}
 }
 @media (max-width:760px){.contact-grid{gap:12px 8px}.contact-grid a{font-size:.66rem;white-space:nowrap;overflow-wrap:normal}.contact-grid .mono{font-size:.54rem}}
+
+/* ---------- v9: small poster beside the title on phones ---------- */
+@media (max-width:760px){
+  .ch-grid{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto auto;column-gap:12px;row-gap:.55rem;align-items:end}
+  .ch-poster{display:block;grid-column:1;grid-row:2;width:92px;align-self:end;margin-bottom:.2rem}
+  .ch-poster.frame{width:136px}
+  .ch-poster-in{animation:none;border-radius:5px;box-shadow:0 14px 40px rgba(0,0,0,.6)}
+  .ch-main{grid-column:2;grid-row:2}
+  .ch-bottom{grid-column:1/-1;grid-row:3}
+  .pv-s1{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:end}
+  .pv-s1>div:first-child{grid-column:2;grid-row:1;min-width:0}
+  .pv-poster{display:block;grid-column:1;grid-row:1;width:96px;justify-self:start;align-self:end;margin-bottom:.4rem}
+  .pv-poster.frame{width:140px}
+  .pv-poster-in{animation:none;border-radius:5px;box-shadow:0 14px 40px rgba(0,0,0,.6)}
+  .pv-title{font-size:clamp(1.9rem,9vw,2.8rem)}
+  .ch-title{font-size:clamp(1.5rem,7.2vw,2.2rem)}
+}
+@media (max-width:760px){.pv-backbtn{top:calc(var(--nav-h) + 4px);bottom:auto;inset-inline-start:12px}}
