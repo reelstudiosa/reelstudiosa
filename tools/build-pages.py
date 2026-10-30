@@ -1,0 +1,84 @@
+"""Generate one static subpage per project in site/work/<slug>.html.
+Run from anywhere:  python site/tools/build-pages.py
+Reads slugs/titles from js/data.js (very small regex parse), writes shells that app.js fills in."""
+import re, os, json, io
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+data = io.open(os.path.join(ROOT, "js", "data.js"), encoding="utf-8").read()
+projects = []
+for m in re.finditer(r'key:\s*"(\w+)",\s*slug:\s*"([\w-]+)".*?title:\s*\{\s*en:\s*"([^"]+)",\s*ar:\s*"([^"]+)"\s*\}.*?tagline:\s*\{\s*en:\s*"([^"]+)"', data, re.S):
+    projects.append(dict(key=m.group(1), slug=m.group(2), en=m.group(3), ar=m.group(4), tag=m.group(5)))
+assert projects, "no projects parsed"
+poster = {"doc": "assets/video/doc-poster.jpg", "jersey": "assets/video/jersey-poster.jpg", "short": "assets/video/short-poster.jpg", "feature": "assets/img/feature/still3-clean.webp"}
+
+TEMPLATE = """<!doctype html>
+<html lang="en" dir="ltr" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<base href="../">
+<title>{en} | REEL</title>
+<meta name="description" content="{tag} {en} by REEL, a Saudi creative studio in Riyadh.">
+<meta property="og:title" content="{en} | REEL">
+<meta property="og:description" content="{tag}">
+<meta property="og:image" content="{poster}">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Aref+Ruqaa:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=8">
+</head>
+<body data-project="{slug}" data-theme="{key}">
+<div id="cursor" aria-hidden="true"><div class="c-dot"></div><div class="c-ring"></div><div class="c-label"></div></div>
+<i id="progress" aria-hidden="true"></i>
+<nav id="rail" aria-label="Sections"></nav>
+
+<header id="nav">
+  <a class="nav-lang" href="#" id="langToggle" aria-label="Switch language"><span data-i18n="lang_switch">ع</span></a>
+  <nav class="nav-links">
+    <a href="index.html#work" data-i18n="nav_work">Work</a>
+    <a href="index.html#studio" data-i18n="nav_studio">Studio</a>
+  </nav>
+  <a class="nav-logo" href="index.html" aria-label="REEL home"><img src="assets/img/logo.svg" alt="REEL"></a>
+  <nav class="nav-links">
+    <a href="index.html#services" data-i18n="services_kicker">Services</a>
+    <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
+  </nav>
+  <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span></button>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html#work" data-i18n="nav_work">Work</a>
+    <a href="index.html#studio" data-i18n="nav_studio">Studio</a>
+    <a href="index.html#services" data-i18n="services_kicker">Services</a>
+    <a href="index.html#grade" data-i18n="grade_kicker">The grade</a>
+    <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
+  </div>
+</header>
+
+<main id="projectPage" class="project page">
+  <div class="project-scroll" id="projectScroll">
+    <noscript><h1>{en}</h1><p>{tag}</p></noscript>
+  </div>
+</main>
+
+<div id="lightbox" aria-hidden="true">
+  <button class="lb-close" aria-label="Close">×</button>
+  <button class="lb-prev" aria-label="Previous">‹</button>
+  <img id="lbImg" alt="">
+  <button class="lb-next" aria-label="Next">›</button>
+  <p class="lb-cap mono" id="lbCap"></p>
+</div>
+<div id="toast" class="mono"></div>
+<div id="shutter" class="covered" aria-hidden="true"></div>
+
+<script src="js/manifest.js?v=8"></script>
+<script src="js/data.js?v=8"></script>
+<script src="js/app.js?v=8"></script>
+</body>
+</html>
+"""
+os.makedirs(os.path.join(ROOT, "work"), exist_ok=True)
+for p in projects:
+    html = TEMPLATE.format(en=p["en"].replace('"', "&quot;"), tag=p["tag"].replace('"', "&quot;"), slug=p["slug"], key=p["key"], poster=poster.get(p["key"], ""))
+    with io.open(os.path.join(ROOT, "work", p["slug"] + ".html"), "w", encoding="utf-8") as f:
+        f.write(html)
+    print("wrote work/%s.html" % p["slug"])

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>REEL | Saudi creative studio</title>
+<meta name="description" content="REEL is a Saudi-owned creative studio in Riyadh. Film, documentary and campaigns — written, shot, graded and delivered by Saudi creatives.">
+<meta property="og:title" content="REEL | Saudi creative studio">
+<meta property="og:description" content="Not content. Storytelling that stays.">
+<meta property="og:image" content="assets/video/showreel-poster.jpg">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Aref+Ruqaa:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=8">
+</head>
+<body>
+
+<!-- Academy leader / preloader -->
+<div id="loader" aria-hidden="true"><img class="leader-logo" src="assets/img/logo.svg" alt=""></div>
+
+<div id="cursor" aria-hidden="true"><div class="c-dot"></div><div class="c-ring"></div><div class="c-label"></div></div>
+<i id="progress" aria-hidden="true"></i>
+<nav id="rail" aria-label="Sections"></nav>
+
+<header id="nav">
+  <a class="nav-lang" href="#" id="langToggle" aria-label="Switch language"><span data-i18n="lang_switch">ع</span></a>
+  <nav class="nav-links">
+    <a href="#work" data-i18n="nav_work">Work</a>
+    <a href="#studio" data-i18n="nav_studio">Studio</a>
+  </nav>
+  <a class="nav-logo" href="#top" aria-label="REEL home"><img src="assets/img/logo.svg" alt="REEL"></a>
+  <nav class="nav-links">
+    <a href="#services" data-i18n="services_kicker">Services</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
+  </nav>
+  <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span></button>
+  <div class="nav-mobile" id="navMobile">
+    <a href="#work" data-i18n="nav_work">Work</a>
+    <a href="#studio" data-i18n="nav_studio">Studio</a>
+    <a href="#services" data-i18n="services_kicker">Services</a>
+    <a href="#grade" data-i18n="grade_kicker">The grade</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO: full-screen showreel -->
+  <section id="hero" data-rail="REEL">
+    <div class="hero-bg" aria-hidden="true">
+      <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" poster="assets/video/showreel-poster.jpg" src="assets/video/showreel.mp4"></video>
+      <div class="hero-wash" id="heroWash"></div>
+      <div class="hero-vignette"></div>
+      <div class="hero-grain"></div>
+    </div>
+    <div class="hero-inner">
+      <p class="kicker mono reveal" data-i18n="hero_kicker">A Saudi creative studio · Riyadh · Est. 2025</p>
+      <h1 class="hero-logo reveal"><img src="assets/img/logo.svg" alt="REEL"></h1>
+      <h2 class="hero-title">
+        <span class="line"><span data-i18n="hero_line1">Not content.</span></span>
+        <span class="line"><span class="prism-text" data-i18n="hero_line2">Storytelling that stays.</span></span>
+      </h2>
+    </div>
+    <div class="hero-foot">
+      <a class="hero-now" id="heroNow" href="#work" data-cursor="OPEN">
+        <span class="mono"><span data-i18n="now_showing">Now showing</span> · <b id="heroNowIdx">01</b>/<i id="heroNowN">04</i></span>
+        <strong id="heroNowTitle"></strong>
+        <span class="hero-now-bar"><i id="heroNowBar"></i></span>
+      </a>
+      <div class="hero-tc mono"><span id="heroTC">00:00:00:00</span></div>
+    </div>
+    <div class="hero-frame" aria-hidden="true"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span></div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee-track"><span data-i18n="marquee"></span><span data-i18n="marquee"></span><span data-i18n="marquee"></span></div></div>
+
+  <!-- WORK: reel strip -->
+  <section id="work" data-rail-key="nav_work">
+    <div class="reelstrip" id="reelstrip" data-cursor="DRAG">
+      <div class="reelstrip-track" id="reelTrack"></div>
+    </div>
+  </section>
+
+  <!-- SHOWCASE: scroll through the projects, page theme follows -->
+  <section id="showcase">
+    <div class="show-intro section-head">
+      <p class="kicker mono" data-i18n="show_kicker">In detail</p>
+      <h2 class="h2" data-i18n="show_title">Scroll through the reel.</h2>
+    </div>
+    <div id="chapters"></div>
+  </section>
+
+  <!-- STUDIO -->
+  <section id="studio" data-rail-key="nav_studio">
+    <div class="studio-grid">
+      <div class="studio-text">
+        <p class="kicker mono" data-i18n="studio_kicker">Who we are</p>
+        <h2 class="h2"><span data-i18n="studio_title_a">A Saudi studio,</span><br><em class="prism-text" data-i18n="studio_title_b">built on an obsession with art.</em></h2>
+        <p class="lead" data-i18n="studio_p1"></p>
+        <p data-i18n="studio_p2"></p>
+      </div>
+      <div class="studio-stats" id="studioStats"></div>
+    </div>
+    <div class="values" id="values">
+      <p class="kicker mono" data-i18n="values_kicker">What we believe</p>
+      <div class="values-grid">
+        <article class="value tilt"><span class="mono">01</span><h3 data-i18n="v1_t"></h3><p data-i18n="v1_p"></p></article>
+        <article class="value tilt"><span class="mono">02</span><h3 data-i18n="v2_t"></h3><p data-i18n="v2_p"></p></article>
+        <article class="value tilt"><span class="mono">03</span><h3 data-i18n="v3_t"></h3><p data-i18n="v3_p"></p></article>
+      </div>
+    </div>
+    <div class="ksa-band" aria-hidden="true">
+      <div class="ksa-track"><span>صُنع في الرياض</span><span>MADE IN RIYADH</span><span>مبدعين سعوديين</span><span>SAUDI CREATIVES</span><span>صُنع في الرياض</span><span>MADE IN RIYADH</span><span>مبدعين سعوديين</span><span>SAUDI CREATIVES</span></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" data-rail-key="services_kicker">
+    <div class="section-head">
+      <p class="kicker mono" data-i18n="services_kicker">Services</p>
+      <h2 class="h2" data-i18n="services_title">Everything you can think of.</h2>
+      <p class="hint" data-i18n="services_sub">Three acts. One crew.</p>
+    </div>
+    <div class="acts" id="acts"></div>
+    <div class="filmstrip" aria-hidden="true"><div class="filmstrip-holes top"></div><div class="filmstrip-cells" id="filmCells"></div><div class="filmstrip-holes bottom"></div></div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team" data-rail-key="team_kicker">
+    <div class="section-head">
+      <p class="kicker mono" data-i18n="team_kicker">The crew</p>
+      <h2 class="h2" data-i18n="team_title">Saudi creatives, on and off set.</h2>
+    </div>
+    <div class="team-grid" id="teamGrid"></div>
+  </section>
+
+  <!-- GRADE LAB: full-bleed compare -->
+  <section id="grade" data-rail-key="grade_kicker">
+    <div class="section-head">
+      <p class="kicker mono" data-i18n="grade_kicker">The grade</p>
+      <h2 class="h2" data-i18n="grade_title">Color is the last line of the script.</h2>
+      <p class="hint" data-i18n="grade_sub"></p>
+    </div>
+    <div class="grade-lab">
+      <div class="compare" id="compare" data-cursor="⇔">
+        <img class="cmp-after" id="cmpAfter" alt="">
+        <div class="cmp-before-wrap" id="cmpBeforeWrap"><img class="cmp-before" id="cmpBefore" alt=""></div>
+        <div class="cmp-handle" id="cmpHandle"><span></span></div>
+        <span class="cmp-tag left mono" data-i18n="grade_before">Source</span>
+        <span class="cmp-tag right mono" data-i18n="grade_after">Grade</span>
+        <input type="range" id="cmpRange" min="0" max="100" value="50" aria-label="Compare">
+      </div>
+      <aside class="grade-side">
+        <div class="grade-list glass" id="gradeList"></div>
+        <p class="grade-label mono glass" id="gradeLabel"></p>
+        <div class="palette glass" id="palette"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" data-rail-key="nav_contact">
+    <div class="hero-bg contact-bg" aria-hidden="true"><div class="hero-wash"></div></div>
+    <div class="contact-inner">
+      <p class="kicker mono" data-i18n="contact_kicker">Let's make something</p>
+      <h2 class="h1 contact-title" data-i18n="contact_title">Get creative.</h2>
+      <p class="lead" data-i18n="contact_sub"></p>
+      <div class="contact-cta">
+        <a class="btn btn-solid" id="mailBtn" href="mailto:hello@reelstudiosa.com?subject=Project%20with%20REEL" data-cursor="✉"><span data-i18n="contact_cta">Start a project</span></a>
+        <a class="btn btn-wa" href="https://wa.me/966115076533" target="_blank" rel="noopener" data-cursor="WA"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 1.8a8.2 8.2 0 1 1-4.2 15.3l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 0 1 12 3.8zm-3.3 4.4c-.2 0-.5 0-.7.3-.3.3-1 1-1 2.3s1 2.7 1.1 2.9c.2.2 2 3.1 4.9 4.2 2.4.9 2.9.8 3.4.7.5 0 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4l-.5-.3-1.8-.9c-.3-.1-.4-.1-.6.1l-.8 1c-.2.2-.3.2-.6.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.1.1-.2 0-.4 0-.5l-.9-2c-.2-.5-.4-.4-.6-.4h-.5z"/></svg><span data-i18n="contact_whatsapp">WhatsApp us</span></a>
+      </div>
+      <div class="contact-grid">
+        <div><span class="mono" data-i18n="contact_email">Email</span><a href="mailto:hello@reelstudiosa.com">hello@reelstudiosa.com</a></div>
+        <div><span class="mono" data-i18n="contact_phone">Phone</span><a href="tel:+966115076533" dir="ltr">+966 11 507 6533</a></div>
+        <div><span class="mono" data-i18n="contact_where">Where</span><a href="https://maps.google.com/?q=Riyadh+Saudi+Arabia" target="_blank" rel="noopener" data-i18n="stat_city_long">Riyadh, Saudi Arabia</a></div>
+      </div>
+      <p class="kicker mono follow-k" data-i18n="follow">Follow the studio</p>
+      <div class="socials" id="socials"></div>
+    </div>
+  </section>
+
+  <footer>
+    <img src="assets/img/logo.svg" alt="REEL" class="foot-logo">
+    <p class="mono" data-i18n="footer_rights"></p>
+    <a href="https://reelstudiosa.com" class="mono">reelstudiosa.com</a>
+  </footer>
+</main>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" aria-hidden="true">
+  <button class="lb-close" aria-label="Close">×</button>
+  <button class="lb-prev" aria-label="Previous">‹</button>
+  <img id="lbImg" alt="">
+  <button class="lb-next" aria-label="Next">›</button>
+  <p class="lb-cap mono" id="lbCap"></p>
+</div>
+
+<div id="toast" class="mono"></div>
+<div id="shutter" aria-hidden="true"></div>
+
+<script src="js/manifest.js?v=8"></script>
+<script src="js/data.js?v=8"></script>
+<script src="js/app.js?v=8"></script>
+</body>
+</html>
