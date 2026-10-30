@@ -26,7 +26,7 @@ TEMPLATE = """<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Aref+Ruqaa:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=14">
+<link rel="stylesheet" href="css/style.css?v=15">
 </head>
 <body data-project="{slug}" data-theme="{key}">
 <div id="cursor" aria-hidden="true"><div class="c-dot"></div><div class="c-ring"></div><div class="c-label"></div></div>
@@ -70,9 +70,9 @@ TEMPLATE = """<!doctype html>
 <div id="toast" class="mono"></div>
 <div id="shutter" class="covered" aria-hidden="true"></div>
 
-<script src="js/manifest.js?v=14"></script>
-<script src="js/data.js?v=14"></script>
-<script src="js/app.js?v=14"></script>
+<script src="js/manifest.js?v=15"></script>
+<script src="js/data.js?v=15"></script>
+<script src="js/app.js?v=15"></script>
 </body>
 </html>
 """
