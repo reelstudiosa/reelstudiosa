@@ -288,7 +288,7 @@
   const cmp = $("#compare"), cmpA = $("#cmpAfter"), cmpB = $("#cmpBefore"), range = $("#cmpRange"), pal = $("#palette"), gLabel = $("#gradeLabel");
   let gradeIdx = 0;
   function setPos(p) { p = clamp(p, 2, 98); cmp.style.setProperty("--pos", p + "%"); cmp.style.setProperty("--posn", p); range.value = p; }
-  function stillOf(p, id) { return ((M.projects[p] || {}).stills || []).find(s => s.id === id); }
+  function stillOf(p, id) { const pr = M.projects[p] || {}; return [...(pr.stills || []), ...(pr.gradeStills || [])].find(s => s.id === id); }
   function buildGrade() {
     const list = $("#gradeList"); const items = S.grade.map(g => ({ ...g, s: stillOf(g.p, g.id) })).filter(g => g.s && g.s.log);
     list.innerHTML = items.map((g, i) => `<button data-i="${i}" class="${i === gradeIdx ? "active" : ""}"><img src="${g.s.thumb}" alt=""></button>`).join("");

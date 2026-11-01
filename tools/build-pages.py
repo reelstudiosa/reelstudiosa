@@ -18,15 +18,27 @@ TEMPLATE = """<!doctype html>
 <base href="../">
 <title>{en} | REEL</title>
 <meta name="description" content="{tag} {en} by REEL, a Saudi creative studio in Riyadh.">
+<meta property="og:type" content="video.other">
+<meta property="og:site_name" content="REEL">
+<meta property="og:url" content="https://reelstudiosa.com/work/{slug}.html">
 <meta property="og:title" content="{en} | REEL">
 <meta property="og:description" content="{tag}">
-<meta property="og:image" content="{poster}">
+<meta property="og:image" content="https://reelstudiosa.com/assets/img/og/{slug}.jpg?v=2">
+<meta property="og:image:secure_url" content="https://reelstudiosa.com/assets/img/og/{slug}.jpg?v=2">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{en} | REEL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{en} | REEL">
+<meta name="twitter:description" content="{tag}">
+<meta name="twitter:image" content="https://reelstudiosa.com/assets/img/og/{slug}.jpg?v=2">
 <meta name="theme-color" content="#050505">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Aref+Ruqaa:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=15">
+<link rel="stylesheet" href="css/style.css?v=16">
 </head>
 <body data-project="{slug}" data-theme="{key}">
 <div id="cursor" aria-hidden="true"><div class="c-dot"></div><div class="c-ring"></div><div class="c-label"></div></div>
@@ -70,9 +82,9 @@ TEMPLATE = """<!doctype html>
 <div id="toast" class="mono"></div>
 <div id="shutter" class="covered" aria-hidden="true"></div>
 
-<script src="js/manifest.js?v=15"></script>
-<script src="js/data.js?v=15"></script>
-<script src="js/app.js?v=15"></script>
+<script src="js/manifest.js?v=16"></script>
+<script src="js/data.js?v=16"></script>
+<script src="js/app.js?v=16"></script>
 </body>
 </html>
 """

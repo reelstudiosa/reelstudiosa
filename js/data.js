@@ -111,9 +111,9 @@ window.SITE = {
 
   /* Grade lab: which stills get a before/after. {p: project key, id: still id} — must have a "log" file in the manifest. */
   grade: [
+    { p: "feature", id: "g154", label: { en: "Beyond the Novel · amber skin, olive shadows", ar: "ما بعد الرواية · بشرة كهرمانية وظلال زيتونية" } },
     { p: "short", id: "s01", label: { en: "Underpass · sun-bleached warm", ar: "النفق · دفء مغسول بالشمس" } },
     { p: "doc", id: "s01", label: { en: "Backstage · soft tungsten", ar: "الكواليس · تنغستن ناعم" } },
-    { p: "jersey", id: "s03", label: { en: "Reveal · ROC purple", ar: "الكشف · بنفسجي ROC" } },
     { p: "short", id: "s02", label: { en: "Desert · dusty neutrals", ar: "الصحراء · حياديات مغبّرة" } },
     { p: "doc", id: "s15", label: { en: "Arena · cyan crowd", ar: "الساحة · جمهور سماوي" } },
     { p: "short", id: "s04", label: { en: "Night · fire & shadow", ar: "الليل · نار وظل" } }

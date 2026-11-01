@@ -451,6 +451,27 @@ window.MANIFEST={
      ]
     }
    ]
+  },
+  "feature": {
+   "gradeStills": [
+    {
+     "id": "g154",
+     "src": "assets/img/feature/g154.webp",
+     "mid": "assets/img/feature/g154-m.webp",
+     "thumb": "assets/img/feature/g154-t.webp",
+     "w": 2048,
+     "h": 858,
+     "orig": "Still 154.jpg",
+     "palette": [
+      "#0b0a07",
+      "#221910",
+      "#362317",
+      "#58472b",
+      "#b6ab81"
+     ],
+     "log": "assets/img/feature/g154-log.webp"
+    }
+   ]
   }
  },
  "looks": [
