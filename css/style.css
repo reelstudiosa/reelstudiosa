@@ -845,3 +845,10 @@ body.p-snap{scroll-snap-type:none!important}
 #hero .kicker{margin-bottom:0}
 .hero-inner{gap:.55rem}
 .hero-logo{margin:.1rem 0 .3rem}
+
+
+/* ============ v12: no background zoom on touch devices (feature bg twitch) ============ */
+@media (hover:none),(max-width:760px){
+  .ch-bg img,.ch-bg video{transform:translateZ(0)!important;transition:opacity .9s!important}
+  .pv-media>img.kb{animation:none!important;transform:translateZ(0)!important}
+}

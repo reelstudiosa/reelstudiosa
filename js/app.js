@@ -252,9 +252,11 @@
   function initShowcaseObserver() {
     const sec = $("#showcase");
     showIO = new IntersectionObserver(es => {
-      es.forEach(en => { const ch = en.target; if (en.isIntersecting) { ch.classList.add("active"); if (ch._play && !reduced) ch._play(); } else { ch.classList.remove("active"); if (ch._stop) ch._stop(); } });
+      es.forEach(en => { const ch = en.target, r = en.intersectionRatio, on = ch.classList.contains("active");
+        if (en.isIntersecting && r >= .3 && !on) { ch.classList.add("active"); if (ch._play && !reduced) ch._play(); }
+        else if ((!en.isIntersecting || r < .12) && on) { ch.classList.remove("active"); if (ch._stop) ch._stop(); } });
       const act = $$(".chapter.active"); if (act.length) body.dataset.theme = act[act.length - 1].dataset.key;
-    }, { threshold: .35 });
+    }, { threshold: [0, .12, .3] });
     new IntersectionObserver(es => { if (!es[0].isIntersecting) delete body.dataset.theme; }, { threshold: 0, rootMargin: "-30% 0px -30% 0px" }).observe(sec);
     $$(".chapter").forEach(ch => showIO.observe(ch));
   }
