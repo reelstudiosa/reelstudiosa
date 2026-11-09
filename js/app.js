@@ -70,7 +70,7 @@
       if (el) { cur.classList.add("hover"); cLabel.textContent = el.getAttribute("data-cursor") || (el.closest(".reel-card") ? t(S.ui.open_project).toUpperCase() : ""); }
       else cur.classList.remove("hover");
     });
-    function loop() { cx = lerp(cx, tx, .22); cy = lerp(cy, ty, .22); cur.style.transform = `translate3d(${cx.toFixed(1)}px,${cy.toFixed(1)}px,0)`; if (Math.abs(cx - tx) > .3 || Math.abs(cy - ty) > .3) requestAnimationFrame(loop); else moving = false; }
+    let lt = 0; function loop(now) { const dt = lt ? clamp(now - lt, 0, 50) : 16.7; lt = now; const k = 1 - Math.pow(.78, dt / 16.7); cx = lerp(cx, tx, k); cy = lerp(cy, ty, k); cur.style.transform = `translate3d(${cx.toFixed(1)}px,${cy.toFixed(1)}px,0)`; if (Math.abs(cx - tx) > .3 || Math.abs(cy - ty) > .3) requestAnimationFrame(loop); else { moving = false; lt = 0; } }
   }
 
   /* ---------- nav + scroll progress ---------- */
@@ -150,7 +150,7 @@
     // hero: parallax wash via direct transforms (compositor-only), showreel caption
     const hero = $("#hero"), wash = $("#heroWash"); let hx = 0, hy = 0, hxT = 0, hyT = 0, pm = false;
     if (fine && !reduced && wash) {
-      const step = () => { hx = lerp(hx, hxT, .06); hy = lerp(hy, hyT, .06); wash.style.transform = `translate3d(${(hx * -24).toFixed(1)}px,${(hy * -18).toFixed(1)}px,0) scale(1.04)`; if (Math.abs(hx - hxT) > .002 || Math.abs(hy - hyT) > .002) requestAnimationFrame(step); else pm = false; };
+      let wt = 0; const step = (now) => { const dt = wt ? clamp(now - wt, 0, 50) : 16.7; wt = now; const k = 1 - Math.pow(.94, dt / 16.7); hx = lerp(hx, hxT, k); hy = lerp(hy, hyT, k); wash.style.transform = `translate3d(${(hx * -24).toFixed(1)}px,${(hy * -18).toFixed(1)}px,0) scale(1.04)`; if (Math.abs(hx - hxT) > .002 || Math.abs(hy - hyT) > .002) requestAnimationFrame(step); else { pm = false; wt = 0; } };
       hero.addEventListener("mousemove", e => { const r = hero.getBoundingClientRect(); hxT = ((e.clientX - r.left) / r.width - .5) * 2; hyT = ((e.clientY - r.top) / r.height - .5) * 2; if (!pm) { pm = true; requestAnimationFrame(step); } }, { passive: true });
     }
     const tcEl = $("#heroTC"); const t0 = performance.now();
@@ -176,12 +176,12 @@
     addEventListener("pointerup", endDrag); addEventListener("pointercancel", endDrag);
     strip.addEventListener("mouseenter", () => { paused = true; }); strip.addEventListener("mouseleave", () => { paused = false; });
     addEventListener("resize", layoutStrip);
-    requestAnimationFrame(stripFrame);
+    if (!stripLoop) { stripLoop = true; requestAnimationFrame(stripFrame); }
     range.addEventListener("input", () => setPos(+range.value)); setPos(50);
     initShowcaseObserver();
     const m = location.hash.match(/^#\/work\/([\w-]+)/); if (m && bySlug(m[1])) location.replace(pageUrl(bySlug(m[1])));
   }
-  let offset = 0, setW = 0, paused = false, lastFrame = 0, lastBest = 0;
+  let offset = 0, setW = 0, paused = false, lastFrame = 0, lastBest = 0, stripLoop = false;
   function buildStrip() {
     const one = S.projects.map((p, i) => `
       <a class="reel-card" href="${pageUrl(p)}" data-slug="${p.slug}" draggable="false">
@@ -205,7 +205,7 @@
   }
   function layoutStrip() { const cards = $$(".reel-card", track), n = S.projects.length; if (cards.length < 2 * n) return; setW = Math.abs(cards[n].offsetLeft - cards[0].offsetLeft); }
   function stripFrame(now) {
-    const dt = Math.min(50, now - (lastFrame || now)); lastFrame = now;
+    const dt = lastFrame ? clamp(now - lastFrame, 0, 34) : 0; lastFrame = now;
     if (!dragging && !paused && !reduced && document.visibilityState === "visible") offset -= dt * 0.04;
     if (setW > 0) { while (offset <= -setW) offset += setW; while (offset > 0) offset -= setW; }
     track.style.transform = `translate3d(${(html.dir === "rtl" ? -offset : offset).toFixed(2)}px,0,0)`;
@@ -288,7 +288,7 @@
 
   /* ---------- grade lab ---------- */
   const cmp = $("#compare"), cmpA = $("#cmpAfter"), cmpB = $("#cmpBefore"), range = $("#cmpRange"), pal = $("#palette"), gLabel = $("#gradeLabel");
-  let gradeIdx = 0;
+  let gradeIdx = 0, sweepN = 0;
   function setPos(p) { p = clamp(p, 2, 98); cmp.style.setProperty("--pos", p + "%"); cmp.style.setProperty("--posn", p); range.value = p; }
   function stillOf(p, id) { const pr = M.projects[p] || {}; return [...(pr.stills || []), ...(pr.gradeStills || [])].find(s => s.id === id); }
   function buildGrade() {
@@ -301,7 +301,7 @@
     cmpA.src = g.s.src; cmpB.src = g.s.log; gLabel.textContent = t(g.label) + "  ·  " + g.s.orig.replace(/\.(png|jpg)$/i, "");
     pal.innerHTML = g.s.palette.map((c, i) => `<button class="chip" style="background:${c};transition-delay:${i * 40}ms" data-hex="${c}" data-cursor="COPY"><code>${c}</code></button>`).join("");
     $$(".chip", pal).forEach(ch => ch.addEventListener("click", () => copy(ch.dataset.hex)));
-    if (!reduced) { setPos(50); let p = 50, dir = 1, n = 0; const id = setInterval(() => { p += dir * 1.2; n++; if (n > 22) dir = -1; if (n > 66) { clearInterval(id); return; } setPos(p); }, 16); }
+    if (!reduced) { setPos(50); const st = performance.now(), sweepId = ++sweepN; const tick = now => { if (sweepId !== sweepN) return; const k = clamp((now - st) / 1100, 0, 1); setPos(50 + 26 * Math.sin(k * Math.PI)); if (k < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
   }
 
   /* ================= PROJECT PAGE ================= */
