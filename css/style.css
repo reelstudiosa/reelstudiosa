@@ -37,7 +37,7 @@ section{position:relative;padding:clamp(80px,12vh,160px) var(--gutter)}
 /* ---------- reveal ---------- */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
 .reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}*{animation-duration:.001s!important}}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}*{animation-duration:.001s!important;animation-iteration-count:1!important}.marquee-track,.ksa-track,.ch-poster-in,.pv-poster-in,.pv-media>img.kb,.prism-text,.sstat::after,.scroll-hint i::after{animation:none!important}.rc-rec::before,.ch-rec::before{animation:none!important;opacity:1}}
 
 /* ---------- loader ---------- */
 #loader{position:fixed;inset:0;z-index:100;background:#000;display:grid;place-items:center;transition:opacity .6s var(--ease),visibility .6s}
